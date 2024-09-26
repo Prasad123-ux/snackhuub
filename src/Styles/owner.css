@@ -1,0 +1,123 @@
+
+
+.why {
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+.foodie{
+    font-size: 0.8rem;
+    color: #808080;
+}
+.already{
+    font-size: 1.1rem;
+    text-align: center;
+    font-weight: 400;
+
+}
+.search{
+font-size: 0.9rem;
+text-align: center;
+color: gray;
+}
+.our{
+    font-size: 1.2rem;
+    font-weight: 500;
+
+}
+.carouse{
+    width: 100%;
+
+}
+.side-img{
+    width: 100%;
+    /* opacity: 0.4; */
+    z-index: 500;
+}
+.start{
+    font-size: 1.0rem;
+    color: white;
+    font-weight: 700;
+}
+.create{
+    font-size: 0.8rem;
+    font-weight: 800;
+    color:lightgray;
+}
+.question{
+    padding: 0;
+}
+.frequently{
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 70px;
+}
+.partner{
+    font-size: 1.2rem;
+}
+.at{
+    font-size: 1.0rem;
+}
+.and{
+    font-size:0.8rem
+}
+
+
+
+@media only screen and (min-width: 768px ) {
+    .why {
+        font-size: 2.0rem;
+    }
+    .foodie{
+        font-size: 1.2rem;
+    }
+    .already{
+        font-size: 2.2rem;
+        text-align: center;
+        font-weight: 400;
+
+    }
+    .search{
+        font-size: 1.3rem;
+        text-align: center;
+        color: gray;
+        
+    }
+    .our{
+        font-size:2.2rem;
+
+    }
+    .carouse{
+        width:25%;
+    
+
+    }
+    .side-img{
+        width: 60%;
+    }
+    .start{
+        font-size: 2.0rem;
+        color: white;
+        font-weight: 700;
+    }
+    .create{
+        font-size: 1.2rem;
+        font-weight: 800;
+        color:lightgray;
+    }
+    .question{
+        padding: 100px 300px 100px 300px;
+    }
+    .frequently{
+        font-size: 2.2rem;
+        font-weight: 600;
+    }
+    .partner{
+        font-size: 2.5rem;
+    }
+    .at{
+        font-size: 2.2rem;
+    }
+    .and{
+        font-size:1.2rem
+    }
+}

@@ -1,0 +1,41 @@
+  
+  .card{
+    box-shadow: 20px;
+  }
+  
+  .delivery{
+    font-size: 2rem;
+    /* color: red; */
+    font-weight: 700;
+}
+.price{
+    font-size: 1.1rem;
+}
+.location{
+    font-size: 1.2rem;
+    color: gray;
+}
+.main-image{
+    &:hover{
+        padding: 5px;
+    }
+}
+.card-button{
+    background-color:burlywood;
+    &:hover{
+        background-color: aliceblue;
+    }
+}
+/* .modal-backdrop {
+    display: none;
+} */
+.review-side{
+    height: 200px;
+}
+.rate-heading{
+    /* padding-left: 30px; */
+    height: 90px;
+}
+.filter{
+    border: none;
+}

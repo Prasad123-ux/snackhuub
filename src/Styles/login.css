@@ -1,0 +1,57 @@
+  
+   
+@media only screen and  ( max-width: 576px  ) {
+    
+    .email{
+        width: 90%;
+        
+        
+       }
+       .sign-email{
+        width: 90%;
+
+       }
+       .btn-submit{
+        width: 200px;
+       }
+      
+    }
+    .input{
+        width: 100%;
+    }
+@media only screen and (min-width:576px) and (max-width:768px) {
+    .email{
+        width: 60%;
+       }
+       .sign-email{
+        width: 60%;
+
+       }
+       .btn-submit{
+        width: 300px;
+       }
+      
+  
+}
+@media only screen and (width>768px ) {
+    
+    .email{
+        width: 400px;
+       }
+
+       .sign-email{
+        width: 50%;
+       }
+       .register-form{
+        padding-right: 150px;
+        padding-left: 150px;
+        /* background-color: lightskyblue; */
+        border-radius: 20spx;
+        
+       }
+       .btn-submit{
+        width: 200px;
+       }
+      
+       
+}
