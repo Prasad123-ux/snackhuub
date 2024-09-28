@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Card from "../Card";
 import Footer from "../Option/Footer";
+import "../../Styles/home.css"
 
 export default function Home() {
   const [foodCat, setFoodCat] = useState([]);
@@ -21,15 +22,16 @@ export default function Home() {
 
   const loadData = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/getProductData', {
-        method: 'POST',
+      const response = await fetch('https://foodie-backend-f64l.onrender.com/api/displayData', {
+        method: 'get',
         headers: {
           'Content-Type': 'application/json'
         }
       });
       if (response.ok) {
         const data = await response.json();
-        setFoodItems(data.message);
+        setFoodItems(data.data);
+        // console.log(foodItems[0])
       } else {
         throw new Error(response.statusText);
       }
@@ -40,8 +42,8 @@ export default function Home() {
 
   const getCatData = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/getCatData', {
-        method: "POST",
+      const response = await fetch('https://foodie-backend-f64l.onrender.com/api/getCatData', {
+        method: "GET",
         headers: {
           "Content-Type": "application/json"
         },
@@ -121,11 +123,20 @@ export default function Home() {
     localStorage.removeItem('expiresIn');
   };
 
+
+
+  (foodItems.map((item)=>{
+    return console.log(item) 
+  }))
+
+  console.log(foodItems.length)
   return (
-    <div>
-      <div>
+    <div className="home">
+      
+      <div >
         {/* Your carousel component */}
       </div>
+  
 
       <div className="container-fluid">
         {foodCat && foodCat.length > 0 ? (

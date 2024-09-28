@@ -36,7 +36,7 @@ useEffect(()=>{
 
   const findReview= async()=>{
     try{
-      const response= await fetch('http://localhost:5000/api/findReview',{
+      const response= await fetch('https://foodie-backend-f64l.onrender.com/api/findReview',{
         method:"POST",
         body:JSON.stringify({id}),
         headers:{
@@ -65,7 +65,7 @@ console.log(data.message)
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('http://localhost:5000/api/getOrderOnID', {
+                const response = await fetch('https://foodie-backend-f64l.onrender.com/api/getOrderOnID', {
                     method: 'POST',
                     body: JSON.stringify({ id }),
                     headers: {
@@ -102,7 +102,7 @@ console.log(data.message)
       const data={id,  qty, token }
       
       
-       fetch('http://localhost:5000/api/addCart', {
+       fetch('https://foodie-backend-f64l.onrender.com/api/addCart', {
         
          method:"POST",
          body:JSON.stringify(data),

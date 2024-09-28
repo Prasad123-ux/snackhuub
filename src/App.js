@@ -1,5 +1,4 @@
-
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'   
 import Home from './Components/Screens/Home'
 import Login from './Components/Screens/Login'
 import Sign from './Components/Screens/Sign'
@@ -10,8 +9,7 @@ import Navbar from './Components/Option/Navbar'
 import ShopRegister from './Components/ShopRegister'
 import RegisterProduct from './Components/RegisterProduct'
 import ProductDetail from './Components/Option/ProductDetail'
-
-   import Profile from './Components/Option/Profile'
+import Profile from './Components/Option/Profile'
 import Porders from './Components/Option/Porders'
 import OwnerProfile from './Components/OwnerProfile'
 import Summary from './Components/Option/Summary'

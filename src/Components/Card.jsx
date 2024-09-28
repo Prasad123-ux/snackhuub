@@ -1,4 +1,4 @@
-import {  useState } from "react"
+import {   useState } from "react"
 import { useNavigate } from "react-router-dom"
 import PropTypes from 'prop-types';
 
@@ -18,7 +18,7 @@ export default function Card({ name, address, price, img, id, rating, deliveryTi
   
   const options={'full':250, half:"420"}
     let priceOptions= Object.keys(options)
-    const [size, setSize]= useState(priceOptions[0])
+    const [size, setSize]= useState(priceOptions[0])    
   const [qty, setQty]= useState()
 
 const [cartSave, setCartSave]= useState(true)
@@ -29,7 +29,7 @@ console.log(price)
 console.log(rating)
 console.log(deliveryTime)
 console.log(img)
-
+          
 
 
 
@@ -52,7 +52,7 @@ setCartSave(false)
 const data={id, size, qty, token}
 console.log(data)
 
- fetch('http://localhost:5000/api/addCart', {
+ fetch('https://foodie-backend-f64l.onrender.com/api/addCart', {
   
    method:"POST",
    body:JSON.stringify(data),
@@ -94,7 +94,7 @@ const addToFavourites=()=>{
 const data={id, size, qty, token}
 console.log(data)
 
- fetch('http://localhost:5000/api/addFavourites', {
+ fetch('https://foodie-backend-f64l.onrender.com/api/addFavourites', {
   
    method:"POST",
    body:JSON.stringify(data),
@@ -136,8 +136,8 @@ console.log(data)
 
   return (
    
-    <div >
-      
+    <div  className="mt-5">
+    
       <div>
         {
           !cartSave  ?

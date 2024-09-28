@@ -27,7 +27,7 @@ export default function GetOrder() {
   const data={id,qty, token}
   console.log(data)
   
-   fetch('http://localhost:5000/api/addCart', {
+   fetch('https://foodie-backend-f64l.onrender.com/api/addCart', {
     
      method:"POST",
      body:JSON.stringify(data),
@@ -56,7 +56,7 @@ export default function GetOrder() {
   }
 
 const getProduct=()=>{
-  fetch('http://localhost:5000/api/displayData', {
+  fetch('https://foodie-backend-f64l.onrender.com/api/displayData', {
     method:"POST",
     headers:{
       "Content-Type":"application/json"

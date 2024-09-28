@@ -40,7 +40,7 @@ export default function Summary() {
     
       const handleFormSubmit=async (e)=>{
         e.preventDefault()  
-         await fetch('http://localhost:5000/api/updateUserLocation', {
+         await fetch('https://foodie-backend-f64l.onrender.com/api/updateUserLocation', {
           method:"POST",
           body:JSON.stringify({data:userData, token:token}),
           headers:{
@@ -67,7 +67,7 @@ export default function Summary() {
       useEffect(()=>{
         const fetchProfileDetail= async () =>{
           try{
-          const  response= await fetch('http://localhost:5000/api/getUserDetail', {
+          const  response= await fetch('https://foodie-backend-f64l.onrender.com/api/getUserDetail', {
             method:"POST",
             body:JSON.stringify({token:token}),
             headers:{
@@ -100,7 +100,7 @@ export default function Summary() {
       // const token= localStorage.getItem('token')
   // const fetchProfileDetail=()=>{
 
-  //   fetch('http://localhost:5000/api/getUserDetail',{
+  //   fetch('https://foodie-backend-f64l.onrender.com/api/getUserDetail',{
   //     method:"POST",
   //     body:JSON.stringify({token:token}),
   //     headers:{
@@ -144,7 +144,7 @@ export default function Summary() {
     
     const fetchData = async () => {
         try {
-            const response = await fetch('http://localhost:5000/api/getOrderOnID', {
+            const response = await fetch('https://foodie-backend-f64l.onrender.com/api/getOrderOnID', {
                 method: 'POST',
                 body: JSON.stringify({ id }),
                 headers: {
@@ -178,7 +178,7 @@ export default function Summary() {
 
   const conformOrder=(id)=>{
     const token=localStorage.getItem('token')
-    fetch('http://localhost:5000/api/setOrders', {
+    fetch('https://foodie-backend-f64l.onrender.com/api/setOrders', {
       method:"POST",
       headers:{
         "Content-Type":"application/json"

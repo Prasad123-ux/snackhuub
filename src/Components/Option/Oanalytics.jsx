@@ -29,7 +29,7 @@ const token= localStorage.getItem('token')
   useEffect(()=>{
 const handleShopDetailData= async()=>{
   try{
-    const response= await fetch('http://localhost:5000/api/getMyOrder', {
+    const response= await fetch('https://foodie-backend-f64l.onrender.com/api/getMyOrder', {
       method:"POST",
       body:JSON.stringify({token}),
       headers:{

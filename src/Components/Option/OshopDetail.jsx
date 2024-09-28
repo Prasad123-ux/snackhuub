@@ -9,7 +9,7 @@ export default function OshopDetail({name, shopName, address, state, email, city
   const handleUpdatedShopData=(e)=>{
     e.preventDefault()
 
-    fetch('http://localhost:5000/api/updateShopDetail', {
+    fetch('https://foodie-backend-f64l.onrender.com/api/updateShopDetail', {
       method:"POST",
       headers:{"Content-type":"application/json"},
       body:JSON.stringify({token:token, data:productData})
