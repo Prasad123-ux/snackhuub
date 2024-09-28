@@ -52,7 +52,7 @@ setCartSave(false)
 const data={id, size, qty, token}
 console.log(data)
 
- fetch('https://foodie-backend-f64l.onrender.com/api/addCart', {
+ fetch('https://foodie-backend-4.onrender.com/api/addCart', {
   
    method:"POST",
    body:JSON.stringify(data),
@@ -94,7 +94,7 @@ const addToFavourites=()=>{
 const data={id, size, qty, token}
 console.log(data)
 
- fetch('https://foodie-backend-f64l.onrender.com/api/addFavourites', {
+ fetch('https://foodie-backend-4.onrender.com/api/addFavourites', {
   
    method:"POST",
    body:JSON.stringify(data),

@@ -16,7 +16,7 @@ const token= localStorage.getItem('token')
 
 
     const getOwnerProduct=()=>{
-        fetch('https://foodie-backend-f64l.onrender.com/api/getOwnerProduct', {      //api call
+        fetch('https://foodie-backend-4.onrender.com/api/getOwnerProduct', {      //api call
         method:"POST",
         headers:{
           "Content-Type":"application/json"

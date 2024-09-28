@@ -24,7 +24,7 @@ const token= localStorage.getItem('token')
 const handleSubmitReview = async () =>{
   
   try{
-  const response=await fetch('https://foodie-backend-f64l.onrender.com/api/submitReview', {
+  const response=await fetch('https://foodie-backend-4.onrender.com/api/submitReview', {
     method:"POST",
     body:JSON.stringify({rating ,review , id, token,}),
     headers:{
@@ -52,7 +52,7 @@ const handleSubmitReview = async () =>{
 
   const fetchProductData = async () => {
       try {
-          const response = await fetch('https://foodie-backend-f64l.onrender.com/api/getOrderOnID', {
+          const response = await fetch('https://foodie-backend-4.onrender.com/api/getOrderOnID', {
               method: 'POST',
               body: JSON.stringify({id} ),
               headers: {

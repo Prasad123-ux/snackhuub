@@ -12,7 +12,7 @@ const [credentials, setCredentials]= useState({name:"", lastName:"", email:"",pa
 
 const handleFormSubmit=async (e)=>{
     e.preventDefault()
-    await fetch('https://foodie-backend-f64l.onrender.com/api/createUser', {
+    await fetch('https://foodie-backend-4.onrender.com/api/createUser', {
     method:'POST',
     headers:{
       'Content-type':"application/json"

@@ -28,7 +28,7 @@ export default function Profile() {
   const token= localStorage.getItem('token')
   const fetchProfileDetail=()=>{
 
-    fetch('https://foodie-backend-f64l.onrender.com/api/getUserDetail',{
+    fetch('https://foodie-backend-4.onrender.com/api/getUserDetail',{
       method:"POST",
       body:JSON.stringify({token:token}),
       headers:{
@@ -55,7 +55,7 @@ export default function Profile() {
   const handleUpdatedData=(e)=>{
     e.preventDefault()
 
-    fetch('https://foodie-backend-f64l.onrender.com/api/updateUserDetail', {
+    fetch('https://foodie-backend-4.onrender.com/api/updateUserDetail', {
       method:"POST",
       body:JSON.stringify({token:token, userDetail:changeDetail}),
       headers:{

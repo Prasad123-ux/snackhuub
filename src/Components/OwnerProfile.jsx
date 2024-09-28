@@ -27,7 +27,7 @@ export default function OwnerProfile() {
     const token= localStorage.getItem('token')
     const fetchOwnerProfileDetail=()=>{
   
-      fetch('https://foodie-backend-f64l.onrender.com/api/getOwnerDetail',{
+      fetch('https://foodie-backend-4.onrender.com/api/getOwnerDetail',{
         method:"POST",
         body:JSON.stringify({token:token}),
         headers:{
@@ -55,7 +55,7 @@ export default function OwnerProfile() {
     const handleUpdatedData=(e)=>{
       e.preventDefault()
   
-      fetch('https://foodie-backend-f64l.onrender.com/api/updateOwnerDetail', {
+      fetch('https://foodie-backend-4.onrender.com/api/updateOwnerDetail', {
         method:"POST",
         body:JSON.stringify({token:token, userDetail:changeDetail}),
         headers:{

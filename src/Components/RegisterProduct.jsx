@@ -22,7 +22,7 @@ export default function RegisterProduct() {
     const token= localStorage.getItem('token')
     try{
 
-    fetch('https://foodie-backend-f64l.onrender.com/api/addProductData', {
+    fetch('https://foodie-backend-4.onrender.com/api/addProductData', {
       method:"POST",
       headers:{
         "Content-type":"application/json"

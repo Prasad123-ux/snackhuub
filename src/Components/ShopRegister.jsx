@@ -17,7 +17,7 @@ export default function ShopRegister() {
     e.preventDefault()
     
      
-      fetch('https://foodie-backend-f64l.onrender.com/api/ownerRegister', {
+      fetch('https://foodie-backend-4.onrender.com/api/ownerRegister', {
         method:'POST',
         headers:{
           'Content-Type':'application/json'
