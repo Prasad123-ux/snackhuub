@@ -1,11 +1,10 @@
  import React from 'react'
-
 import { useEffect, useState } from "react"
-
 import Carousel from "./Option/Carousel"
 import GetOrder from "./Option/GetOrder"
 import { useNavigate } from "react-router-dom"
-import Footer from "./Option/Footer"
+import Footer from "./Option/Footer"  
+
 
 export default function Cart() {
    const [cartItem, setCartItems]= useState([])

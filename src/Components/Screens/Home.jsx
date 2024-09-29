@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import Card from "../Card";
 import Footer from "../Option/Footer";
 import "../../Styles/home.css"
+import Loader from "../Option/Loader";
+import spinner from  "../../Assets/spinner.gif"
 
 export default function Home() {
   const [foodCat, setFoodCat] = useState([]);
@@ -20,7 +22,10 @@ export default function Home() {
     { heading: "Delivery Time (in minutes)", content: [10, 20, 30, 40, 50] }
   ];
 
+  const [loading, setLoding]= useState(false)
+
   const loadData = async () => {
+    setLoding(true)
     try {
       const response = await fetch('https://foodie-backend-4.onrender.com/api/displayData', {
         method: 'get',
@@ -29,8 +34,10 @@ export default function Home() {
         }
       });
       if (response.ok) {
+      
         const data = await response.json();
         setFoodItems(data.data);
+        setLoding(false)
         // console.log(foodItems[0])
       } else {
         throw new Error(response.statusText);
@@ -131,7 +138,9 @@ export default function Home() {
 
   console.log(foodItems.length)
   return (
-    <div className="home">
+    <div className="home"> { loading  ?
+  <img src={spinner} className="loader" alt="loading"/> :""
+  }
       
       <div >
         {/* Your carousel component */}
@@ -143,7 +152,7 @@ export default function Home() {
           foodCat.map((item) => {
             return (
               <div key={item._id} className="row">
-                <div className="fs-3 m-3">{item.CategoryName}</div>
+                <div className="fs-3 mt-3">{item.CategoryName}</div>
                 <hr />
                 {valueLength > 0 ? (
                   foodItems.filter(data => 

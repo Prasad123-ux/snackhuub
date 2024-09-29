@@ -136,7 +136,7 @@ console.log(data)
 
   return (
    
-    <div  className="mt-5">
+    <div  className=" mx-auto">
     
       <div>
         {
@@ -145,7 +145,7 @@ console.log(data)
 }
       
           
-          <div className="card mt-3 shadow text-dark" style={{'width': '18rem','maxHeight':"360px"}}>
+          <div className="card  shadow text-dark mx-auto" style={{'width': '18rem','maxHeight':"360px"}}>
           <button className="btn" onClick={()=>{dataPrint(id)}} to="/productDetail">
           <img src={img} className="card-img-top rounded-5 main-image" name="name" alt={name} style={{height:"120px", objectFit:"fill"}}/>
           </button>
