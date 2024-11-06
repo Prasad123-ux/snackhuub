@@ -10,7 +10,10 @@ import GetOrder from "./GetOrder";
 import {  useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
  import { useNavigate } from "react-router-dom";
- import { FaUserCircle } from "react-icons/fa";
+ import { FaUserCircle } from "react-icons/fa"; 
+ import { useToast } from "@chakra-ui/react"; 
+ import axios from "axios";
+import { useSelector } from "react-redux";
 
 
 
@@ -19,24 +22,33 @@ export default function ProductDetail() {
 
 
     const { id }= useParams();
-    // const [value, setValues]= useState([1,2,3,4,5,6,7,8,9,10,11])
     const [ratings, setRatings]= useState([])
-    const [product, setProduct]= useState([])
+    const [product, setProduct]= useState([null])
     const [qty, setQty]= useState(1)
     const [tokenItem, setItem]= useState()
-    const navigate = useNavigate()
+    const navigate = useNavigate() 
+    const toast= useToast() 
+    
+    const [loader,setLoader]= useState(false) 
+    const foodData= useSelector((state)=>state.foods.allFoods)     
+    const token =useSelector((state)=>state.foods.token)
+
      
+
+
+
   
-useEffect(()=>{
-
-  const token = localStorage.getItem('token') 
-  setItem(token)
 
 
+
+
+     useEffect(()=>{ 
+      window.scrollTo(0,0)
+  
 
   const findReview= async()=>{
     try{
-      const response= await fetch('https://foodie-backend-4.onrender.com/api/findReview',{
+      const response= await fetch(' http://localhost:5000/api/findReview',{
         method:"POST",
         body:JSON.stringify({id}),
         headers:{
@@ -58,118 +70,92 @@ console.log(data.message)
   }
 
   findReview()
-}, [])
+}, [id])
 
 
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch('https://foodie-backend-4.onrender.com/api/getOrderOnID', {
-                    method: 'POST',
-                    body: JSON.stringify({ id }),
-                    headers: {
-                        'Content-type': 'application/json'
-                    }
-                });
-                if (!response.ok) {
-                    
-                    throw new Error(response.statusText);
-                }
-                const data = await response.json();
-                
-                setProduct(data);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-
-        fetchData();
-        window.scrollTo(0, 0);
-
-    }, [id]);
+   
 
 
-    const addToCart=(id)=>{
-        const token= localStorage.getItem('token')
-        // console.log(token)
-        if(token===null){
-          alert('please login first')
-        }else{
-      
-    //   setPart(_id)
-      
-      const data={id,  qty, token }
-      
-      
-       fetch('https://foodie-backend-4.onrender.com/api/addCart', {
-        
-         method:"POST",
-         body:JSON.stringify(data),
-         headers:{
-           'Content-type':"application/json"
-         }
-      
-       }).then((response)=>{
-         if(response.ok){
-           return response.json()
-         }
-         else{
-           throw new Error(response.statusText)
-         }
-      
-       }).then((data)=>{
-          console.log(data)
-      
-       }).catch((err)=>{
-         console.error(err)
-      
-       })
-        
+    const addToCart = async () => {
+      if (token === null) {
+        addToast("Please login Yourself!", "warning");
+      } else {
+        setLoader(true);
+        const data = { id, size:"full", qty, token };
+        try {
+          const response = await axios.post("http://localhost:5000/api/addCart", { data ,token});
+          
+          if (response.status !== 200) {
+            addToast(response.data.message, "error");
+          } else {
+            addToast(response.data.message, "success");
+          }
+        } catch (err) { 
+          
+          addToast(err.response.data.message, "error");
+        } finally {
+          setLoader(false);
+        }
       }
-}
+    };
+  
+    useEffect(()=>{ 
+      const targetItem=foodData.filter((item)=>item._id===id) 
+       console.log(targetItem[0])
+      setProduct(targetItem[0])
+    
+    },[foodData,id])
 
+   
 
-
-
-    const getSummaryOfProduct=(id)=>{
+    const getSummaryOfProduct=(id)=>{ 
+      console.log(id)
       navigate(`/summary/${id}`)
     }
     
   
+    const addToast=(title,status)=>{
+      toast({title: title,
+        
+        status: status,
+        duration: 2000,
+        isClosable: true})
+    
+    }
+    
+    
+    
+  return (  
 
-console.log(tokenItem)
-    
-    
-  return (
     <>
-    {product  && product.data  ?
-    <div className='container-md container-fluid p-md-0 p-3 mt-5'>
+    {product && product.product_images  ?
+    <div className='container-fluid    detail'> 
       
-<div className=' container-md container-fluid mx-auto p-0 m-0   main row'> 
-<img src={product.data.product_images.image1} className="main-img shadow rounded-5 col-8" alt=""/>
-<div className='col-4  p-0'>
+<div className='mx-auto   main row'> 
+<img src={product.product_images.image1} className="main-img shadow rounded-5  d-none d-md-block col-12 col-md-8 " alt=""/>
+<div className='col-12  col-md-4 '>
     <div className='   d-flex '> 
-<img src={product.data.product_images.image2} className="rounded side-img1 shadow rounded-5  " alt="..."/>
-<img src={product.data.product_images.image3} className="rounded float-end shadow rounded-5 side-img2" alt="..."/>
+<img src={product.product_images.image2} className="rounded side-img1 shadow rounded-5   " alt="..."/>
+<img src={product.product_images.image3} className="rounded float-end shadow rounded-5 side-img2" alt="..."/>
 </div>
-<img src={product.data.product_images.image4} className="rounded float-end shadow rounded-5  w-100 side-img3  " alt="..."/>
-
-</div>
-
+<img src={product.product_images.image4} className="rounded float-end shadow rounded-5  w-100 side-img3  " alt="..."/>
 
 </div>
-<div className=' row'>
-    <h1 className='col-9'>{product.data.product_name}</h1> 
-    <span className=' col-3 mt-2  rating'><span className='bg-success p-1 rounded text-white  fw-bolder'> <FcRating/>{product.data.product_rating}</span> <b> 4,500</b> Delivery ratings</span>
-    <span className='category-name '>{product.data.product_category}/{product.data.product_flavour} </span>
-    <span className='col-12 location'> <FaLocationDot /> {product.data.shop_address}</span>
-    <span className='col-12 timing'>Timing :<b> 07:00  to 23:00</b></span> 
-    <span className='col-12 delivery'>Delivery in  :<b>{product.data.product_deliveryTime} min</b></span> 
-    <span className='description col-12'> {product.data.product_description}</span>
 
-     <h4 className="col-md-3 col-8 price" > Price:<FaRupeeSign />{ qty>1 ? product.data.product_price*qty : product.data.product_price }</h4>
-     <div className="col-md-4 col-4 "> 
+
+</div>
+<div className=' product-detail row'>
+    <h1 className='col-6 product-name'>{product.product_name}</h1> 
+    <span className=' col-6 mt-2  rating'><span className='bg-success p-1 rounded text-white  fw-bolder'> <FcRating className="d-inline"/>{product.product_rating}</span> <b className="rating-numbers"> 4,500 Delivery ratings</b> </span>
+    <span className='category-name '>{product.product_category}/{product.product_flavour} </span>
+    <span className='col-12 location'> <FaLocationDot  className="d-inline"/> {product.shop_address}</span>
+    <span className='col-12 timing'>Timing :<b> 07:00   to 23:00</b></span> 
+    <span className='col-12 delivery'>Delivery in  :<b>{product.product_deliveryTime} min</b></span> 
+    <span className='description col-12'> {product.product_description}</span>
+
+     <h4 className="col-md-3 col-12 price" > Price:<FaRupeeSign className="d-inline" />{ qty>1 ? product.product_price*qty : product.product_price }</h4>
+     <div className="col-md-4 col-12 quantity "> 
     Quantity:
     
 {
@@ -180,8 +166,8 @@ console.log(tokenItem)
     })}</select>
            
  }</div>
-  {tokenItem  && tokenItem !== 'undefined' ?
-     <button className="col-md-2 col-5 cart-button  btn btn-primary text-white fw-bold rounded mt-3" onClick={()=>{addToCart(product.data._id)}}>Add to Cart</button>: <button className=" col-md-2 col-5 cart-button  btn btn-danger text-white fw-bold rounded mt-3  " data-bs-toggle="modal" data-dismiss="modal" data-bs-target="#exampleModal1"  >Add to cart</button> 
+  {token  && token !== 'undefined' ?
+     <button className="col-md-2  col-5 cart-button   btn btn-primary text-white rounded" onClick={()=>{addToCart(product._id)}}>Add to Cart</button>: <button className=" col-md-2 col-5 cart-button  btn btn-danger text-white fw-bold rounded  " data-bs-toggle="modal" data-dismiss="modal" data-bs-target="#exampleModal1"  >Add to cart</button> 
 
       }   
 
@@ -207,9 +193,9 @@ console.log(tokenItem)
 
   
      {/* <Link className="col-md-2  col-5 btn  btn-success rounded ms-2 text-white fw-bold mt-3" data-bs-target="#myModal" type="link"  data-bs-toggle="modal" data-dismiss="modal" to="/summary" >Order Now</Link> */}
-     <button className="col-md-2  col-5 btn  btn-success rounded ms-2 text-white fw-bold mt-3"  onClick={()=>{getSummaryOfProduct(product.data._id)}}  >Order Now</button>
+     <button className="col-md-2  col-5 btn  btn-success rounded ms-2 text-white fw-bold  cart-button"  onClick={()=>{getSummaryOfProduct(id)}}>Order Now</button>  
 
-     <div className="accordion col-12  mt-3" id="accordionExample">
+     <div className="accordion  inner-detail col-12 " id="accordionExample">
         <div className="accordion-item">
             <h2 className="accordion-header" id="headingOne">
             <span  className=" accordion-button   fw-bold rounded mt-3" type="link-info" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
@@ -217,15 +203,19 @@ console.log(tokenItem)
                 </span>        
             </h2>
             <div id="collapseOne" className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                <div className="accordion-body  row"></div>
-                <div className="pb-2 ps-3 col-7 fw-bold">Ingredients: <span className="fw-normal text-secondary">{product.data.product_ingredients}</span></div>
-                <div className="pb-2 ps-3 col-7 fw-bold">Refund Policy: <span className="fw-normal text-secondary">{product.data.product_refundPolicy  || "Non Refundable"}</span></div>
-                <div className="pb-2 ps-3 col-7 fw-bold"> Availability: <span className="fw-normal text-secondary">{product.data.product_availability || "Yes"}</span></div>
-                <div className="pb-2 ps-3  col-7 fw-bold"> Type: <span className="fw-normal text-secondary"> {(product.data.product_type) || "Veg"  }</span></div>
-                <div className="pb-2 ps-3 col-7 fw-bold">Flavour : <span className="fw-normal text-secondary">{product.data.product_flavour}</span></div>
-                <div className="pb-2 ps-3 col-7 fw-bold">Weight: <span className="fw-normal text-secondary">{product.data.product_weight}gm</span></div>
-                <div className="pb-2 ps-3 col-7 fw-bold">Storage Warning: <span className="fw-normal text-secondary">{product.data.product_storage}</span></div>
-                <div className="pb-2 ps-3 col-7 fw-bold">Additional Detail: <span className="fw-normal text-secondary">{product.data.product_additional_detail ||  product.data.product_description}</span></div>
+                <div className="accordion-body  row"></div> 
+             
+
+
+
+                <div className="pb-2 ps-3 col-12 col-md-7 fw-bold"> <span className="d-block  d-md-inline">Ingredients: </span><span className="fw-normal text-secondary">{product.product_ingredients}</span></div>
+                <div className="pb-2 ps-3 col-12 col-md-7 fw-bold"> <span className="d-block  d-md-inline">Refund Policy:</span> <span className="fw-normal text-secondary">{product.product_refundPolicy  || "Non Refundable"}</span></div>
+                <div className="pb-2 ps-3 col-12 col-md-7 fw-bold">  <span className="d-block  d-md-inline"> Availability:</span> <span className="fw-normal text-secondary">{product.product_availability || "Yes"}</span></div>
+                <div className="pb-2 ps-3  col-12 col-md-7 fw-bold">  <span className="d-block  d-md-inline">  Type:</span>  <span className="fw-normal text-secondary"> {(product.product_type) || "Veg"  }</span></div>
+                <div className="pb-2 ps-3 col-12 col-md-7 fw-bold">  <span className="d-block  d-md-inline">   Flavour : </span><span className="fw-normal text-secondary">{product.product_flavour}</span></div>
+                <div className="pb-2 ps-3 col-12 col-md-7 fw-bold">    <span className="d-block  d-md-inline">Weight: </span> <span className="fw-normal text-secondary">{product.product_weight}gm</span></div>
+                <div className="pb-2 ps-3 col-12 col-md-7 fw-bold"> <span className="d-block  d-md-inline">Storage Warning: </span><span className="fw-normal text-secondary">{product.product_storage}</span></div>
+                <div className="pb-2 ps-3 col-12 col-md-7 fw-bold">  <span className="d-block  d-md-inline">Additional Detail: </span>  <span className="fw-normal text-secondary">{product.product_additional_detail ||  product.product_description}</span></div>
 
 
 
@@ -237,21 +227,21 @@ console.log(tokenItem)
      {/*  */}
      <div className="col-12 contact">
        <b> Contact us</b> 
-        <span className="d-block" ><FaPhoneAlt />:   {product.data.product_email}</span>
-    <span><IoIosMail /> {product.data.product_mobile}</span>
+        <span className="d-block" ><FaPhoneAlt  className="d-inline"/>:   {product.product_email}</span>
+    <span><IoIosMail  className="d-inline"/> {product.product_mobile}</span>
 
      </div>
      <hr className="mt-5"></hr>
      <div className="bg-white shadow">
-<h2 > Ratings</h2>
+<div className="heading-rating"> Ratings</div>
     <div className="overflow-scroll scroll" style={{height:"500px"}} >
      { ratings && ratings.length>0   ?(
 ratings.map((item, index)=>{
     return <div key={index} className="rounded ratings shadow row mx-auto  mt-5">
       <div className="d-flex  flex-row">
-        <span className="fs-1"><FaUserCircle /></span>  <span className="user-name d-block fs-6 text-secondary ms-3 mt-3 "> {item.userMail}</span>
+        <span className="fs-1"><FaUserCircle  className="d-inline"/></span>  <span className="user-name d-block fs-6 text-secondary ms-3 mt-3 "> {item.userMail}</span>
         </div>
-            <span className=' col-3 mt-2 mx-auto  rating  d-block'><span className='bg-success p-1 rounded text-white  fw-bolder'> <FcRating/> {item.product_rating}.0</span></span>
+            <span className=' col-3 mt-2 mx-auto  rating  d-block'><span className='bg-success p-1 rounded text-white  fw-bolder'> <FcRating className="d-inline"/> {item.product_rating}.0</span></span>
             <span className="feedback">{item.product_review}</span>
 
         
@@ -265,7 +255,7 @@ ratings.map((item, index)=>{
 
 })
 
- ):<div  className="  text-center"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7xrzowMNJL0cK6ANhsGcBFBMyem9pSHA54w&s" className="d-block w-25 mx-auto"/>  <br></br>
+ ):<div  className="  text-center"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7xrzowMNJL0cK6ANhsGcBFBMyem9pSHA54w&s" className="d-block w-25 mx-auto" alt="rating"/>  <br></br>
      <h4 className=" text-secondary">Not Rated Yet ! </h4> 
           <span  className="text-secondary"> Be a first to rate this Product !</span></div> }  </div>
      </div>
@@ -278,8 +268,9 @@ ratings.map((item, index)=>{
     
     :"data not found"
     }
-    <hr className="mt-5"></hr>
-    <GetOrder/>
+    <hr className="mt-5"></hr> 
+      <span className="recommended-heading fs-5">Just More For You</span>
+    <GetOrder category={product.product_category} className="d-inline"/>
 
     <div className="modal fade" id="myModal">
     <div className="modal-dialog">

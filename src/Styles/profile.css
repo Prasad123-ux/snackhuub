@@ -5,10 +5,14 @@
     padding: 10px;
     padding-left: 100px;
     padding-right: 100px ;
-    padding-bottom: 100px;
+    padding-bottom: 100px; 
+    /* margin-top: 10px; */
 }
 .profile_section{
     padding: 20px;
+} 
+.icon{
+    width: fit-content;;
 }
 .userName{
     font-size:32px;

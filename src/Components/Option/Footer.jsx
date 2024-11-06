@@ -54,7 +54,7 @@ export default function Footer() {
 
 
       </div>
-      <div className="col-12 col-sm-6   col-md-6 col-lg-2 p-5">
+      <div className="col-12 col-sm-6   col-md-6 col-lg-2 p-5 ">
         <div className="heading">FODAVERSE FOR</div>
         <div className="content">Foodie</div>
          <div className="content">Blinkit</div>
@@ -84,12 +84,12 @@ export default function Footer() {
       </div>
       <div className="col-12  col-md-4 col-sm-5 col-lg-2  p-5">
         <div className="heading">SOCIAL LINKS</div>
-        <div >
-          <Link  to="https://www.instagram.com/prasad.metkar.925/" className='icon'><FaInstagramSquare /></Link>
+        <div className='d-flex justify-content-center' >
+          <Link  to="https://www.instagram.com/prasad.metkar.925/" className='icon  '><FaInstagramSquare  /></Link>
           <Link to="https://www.linkedin.com/in/prasad-metkar/" className='icon'><IoLogoLinkedin /></Link>
-          <Link to=" https://twitter.com/PrasadMetkar5" className='icon'> <FaTwitter /></Link>
+          <Link to=" https://twitter.com/PrasadMetkar5" className='icon'> <FaTwitter  /></Link>
           <Link to="" className='icon'><FaYoutube /></Link>
-          <Link to="https://www.facebook.com/prasad.metkar.925/" className='icon'><FaFacebook /></Link>
+          <Link to="https://www.facebook.com/prasad.metkar.925/" className='icon '><FaFacebook  /></Link>
         </div>
         <img src="https://b.zmtcdn.com/data/webuikit/9f0c85a5e33adb783fa0aef667075f9e1556003622.png" alt="app store" className="d-block w-100 mt-2"/>
         <img src="https://b.zmtcdn.com/data/webuikit/23e930757c3df49840c482a8638bf5c31556001144.png" className="d-block w-100 mt-2" alt="play store"/>

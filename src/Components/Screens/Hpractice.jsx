@@ -12,7 +12,7 @@ export default function Home() {
 
     const loadData = async () => {
         try {
-            const response = await fetch('https://foodie-backend-4.onrender.com/api/getProductData', {
+            const response = await fetch(' http://localhost:5000/api/getProductData', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -36,7 +36,7 @@ export default function Home() {
     };
 
 const getCatData=()=>{
-  fetch('https://foodie-backend-4.onrender.com/api/getCatData', {
+  fetch(' http://localhost:5000/api/getCatData', {
     method:"POST",
     headers:{
       "Content-Type":"application/json"

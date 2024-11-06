@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Carousel from './Option/Carousel';
 import Footer from './Option/Footer';
+import Mcarousel from "./Option/Mcarousel";
 
 export default function ShopRegister() {
   const [shopOwnerData, setShopOwnerData]= useState({name:"",email:"", password:"", mobile_no:"", shopName:"", contact_no:"",Phone_no:"", address:'',city:"", state:"", zip:'',pan:"", gstin:"", bankName:"",branchName:"", IFSC:"", accountNumber:"" })
@@ -17,7 +18,7 @@ export default function ShopRegister() {
     e.preventDefault()
     
      
-      fetch('https://foodie-backend-4.onrender.com/api/ownerRegister', {
+      fetch(' http://localhost:5000/api/ownerRegister', {
         method:'POST',
         headers:{
           'Content-Type':'application/json'
@@ -43,7 +44,8 @@ export default function ShopRegister() {
   return (
     <>
   
-       <Carousel/>
+       {/* <Carousel/> */} 
+       <Mcarousel/>
     <div className='accordion mx-auto mt-5 m' id="accordionExample">
       <div className='accordion-header d-flex justify-content-center '>
         <button className='btn btn-primary   '  type="button"  data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne"> Register me as a Shop Owner</button> 

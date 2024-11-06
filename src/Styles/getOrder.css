@@ -1,0 +1,28 @@
+/* General card styling for better responsiveness */
+.card {
+    transition: transform 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .card:hover {
+    transform: scale(1.05);
+  }
+  
+  .main-image {
+    object-fit: cover;
+  }
+  
+  .card-body h5 {
+    font-size: 1.2rem;
+  }
+  
+  @media (max-width: 768px) {
+    .card-body h5 {
+      font-size: 1rem;
+    }
+  
+    .card-body span {
+      font-size: 0.85rem;
+    }
+  }
+  

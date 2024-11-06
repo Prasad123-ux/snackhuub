@@ -24,7 +24,7 @@ const token= localStorage.getItem('token')
 const handleSubmitReview = async () =>{
   
   try{
-  const response=await fetch('https://foodie-backend-4.onrender.com/api/submitReview', {
+  const response=await fetch(' http://localhost:5000/api/submitReview', {
     method:"POST",
     body:JSON.stringify({rating ,review , id, token,}),
     headers:{
@@ -52,7 +52,7 @@ const handleSubmitReview = async () =>{
 
   const fetchProductData = async () => {
       try {
-          const response = await fetch('https://foodie-backend-4.onrender.com/api/getOrderOnID', {
+          const response = await fetch(' http://localhost:5000/api/getOrderOnID', {
               method: 'POST',
               body: JSON.stringify({id} ),
               headers: {
@@ -92,7 +92,7 @@ console.log(review)
         <span className='fs-4 fw-bold '>Ratings and Reviews</span>
         <div className='d-flex justify-content-between flex-sm-column flex-row'>
           <span className='fs-lg-5 fs-6 fw-bold'>{productData.data.product_name ? productData.data.product_name:""}/ {productData.data.product_category ? productData.data.product_category:""} </span> 
-        <span className='       d-block'><span className='bg-success  rounded text-white  fw-bolder'> <FcRating/> {productData.data.product_rating ? productData.data.product_rating:""}</span></span>
+        <span className='       d-block'><span className='bg-success  rounded text-white  fw-bolder icon'> <FcRating className='d-inline'/> {productData.data.product_rating ? productData.data.product_rating:""}</span></span>
 
         </div>
       </div>
@@ -124,7 +124,7 @@ console.log(review)
 
 
 
-<Rating ratingValue={rating} rateValue={rate} size={30} onClick={handleRating}  className='mt-3' />   <span className=' d-block d-sm-inline ms-5 fs-6 fw-bold mt-3 mt-sm-0'>{rate[rating]}</span> 
+<Rating  ratingValue={rating} rateValue={rate} size={30} onClick={handleRating}  className='mt-3  d-inline icon' />   <span className='  d-sm-inline ms-5 fs-6 fw-bold mt-3 mt-sm-0'>{rate[rating]}</span> 
 <hr></hr>
 <div><span className='fs-5'>Review This Product</span> <br></br><textarea   onChange={(e)=>{setReview(e.target.value)}} className='w-100 review-side mt-5 p-5 fs-6 fw-bold' placeholder="Description..."/></div>
 <button  className=" btn bg-primary mt-3 fs-6 fw-bolder" onClick={handleSubmitReview}    data-bs-toggle="modal" data-dismiss="modal" data-bs-target="#exampleModal" > Submit</button>

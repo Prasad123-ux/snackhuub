@@ -26,7 +26,7 @@ export default function Modals({userDetail}) {
          }
        const conformOrder=(id)=>{
          const token=localStorage.getItem('token')
-         fetch('https://foodie-backend-4.onrender.com/api/setOrders', {
+         fetch(' http://localhost:5000/api/setOrders', {
            method:"POST",
            headers:{
              "Content-Type":"application/json"

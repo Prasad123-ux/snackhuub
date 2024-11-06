@@ -2,11 +2,14 @@
 import { useEffect, useState } from "react"
 
 import GetOrder from "./Option/GetOrder"
+import "../Styles/order.css"
 
 import Footer from "./Option/Footer"
 import { useNavigate } from "react-router-dom"
 import { MdOutlineStarRate } from "react-icons/md";
-import { FaRupeeSign } from "react-icons/fa";
+import { FaRupeeSign } from "react-icons/fa"; 
+import { Link } from "react-router-dom"
+import { FaCircleArrowDown } from "react-icons/fa6";
 
 
 export default function Order() {
@@ -16,7 +19,7 @@ export default function Order() {
 
     const getOrders= async()=>{
         const token= localStorage.getItem('token')
-       await fetch('https://foodie-backend-4.onrender.com/api/getOrders', {
+       await fetch(' http://localhost:5000/api/getOrders', {
             method:"POST",
             headers:{
                 "Content-Type":"application/json"
@@ -77,12 +80,13 @@ export default function Order() {
   }
   
 
-console.log(products)
+console.log( products && products.length>=1 ?  products[0].product_Category:"") 
+
   
   return (
     
     
-    <div className="bg-light">
+    <div className="bg-light order-section">
         
         {products && products.length > 0 ? products.map((item)=>{
             return <div key={item.id} className="row shadow bg-white m-2  border rounded-3 "   >
@@ -101,7 +105,7 @@ console.log(products)
   <div className="card-body"> 
     
    </div>
-   <div className="d-flex justify-content-between text-gray">  <span>Quantity:{item.product_quantity}</span>  <span className="fw-bold">Final Price:  <FaRupeeSign /> {item.product_price}</span></div>
+   <div className="d-flex justify-content-between text-gray">  <span>Quantity:{item.product_quantity}</span>  <span className="fw-bold">Final Price:  <FaRupeeSign className="d-inline" /> {item.product_price}</span></div>
 
                 </div>
                 <div className=" col-12 col-md-3 p-md-5  ps-5 pe-5 pt-3 ">
@@ -123,23 +127,24 @@ console.log(products)
                         </div>
                         <hr className="text-white"></hr>
                          <div>
-{
-    status==="Order Successfully Delivered" ? <button className="btn text-info" onClick={()=>{makeReview(item.product_id)}}> <MdOutlineStarRate /> Rate and Review Product</button>:""
-}
+
+     <button className="btn text-info" onClick={()=>{makeReview(item.product_id)}}> <MdOutlineStarRate className="d-inline" /> Rate and Review Product</button>
+
                    
                         </div> 
                     </div>
 
 
             </div>
-        }):<div className="mx-auto w-100 text-center bg-white mb-5 ">
-          <img src="https://b.zmtcdn.com/webFrontend/96a9a259cfa3dd8e260d65d1f135ab941581004545.png" className="w-25 d-block mx-auto mt-5 mb-3"  alt="Nothing order here" />
-          <span className="fs-5 text-secondary fw-bold mt-5"> Nothing here yet!</span><br></br>
-          <span className="">You havent placed any order yet.</span>
+        }):<div className="mx-auto w-100 text-center bg-white   myOrder-option ">
+          <img src="https://b.zmtcdn.com/webFrontend/96a9a259cfa3dd8e260d65d1f135ab941581004545.png" className=" d-block mx-auto  myOrder-option-img"  alt="Nothing order here" />
+          <span className="fs-5 text-secondary fw-bold mt-5 mx-auto"> Nothing here yet!</span><br></br>
+          <span className="d-block ">You havent placed any order yet.</span>  
+          <Link to="/" className="btn btn-outline-info mt-2 ">Look Orders ! </Link>
            </div>}
         <div className="mt-5">
-            <h3>Recommended</h3>
-            <GetOrder/>
+            <span className="fs-5 fw-medium">Just For You <FaCircleArrowDown className="d-inline" /></span>
+            <GetOrder category={ products && products.length>=1 ?  products[0].product_Category:"Maharashtrian"}/>
             
             
         </div>

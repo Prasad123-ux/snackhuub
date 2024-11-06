@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { useState } from "react"
 import Footer from "../Option/Footer"
 import "../../Styles/login.css"
-import "../../Styles/login.css"
+// import "../../Styles/login.css"
 
 export default function Login() {
   const [credentials, setCredentials]= useState({ email:"",password:"",})
@@ -11,7 +11,7 @@ export default function Login() {
    let navigate= useNavigate()
   const handleFormSubmit=async (e)=>{
     e.preventDefault()
-    await fetch('https://foodie-backend-4.onrender.com/api/userLogin', {
+    await fetch(' http://localhost:5000/api/userLogin', {
     method:'POST',
     headers:{
       'Content-type':"application/json"
@@ -60,7 +60,7 @@ export default function Login() {
     setCredentials({...credentials, [e.target.name]:e.target.value})
   }
   return (
-    <div className="mx-auto text-center">
+    <div className="mx-auto text-center login-section">
         {/* <div className="p-5 "> */}
       
       <h2 className=" mt-2 mb-5">User Login</h2>
@@ -88,7 +88,7 @@ export default function Login() {
 }
 
     {/* </div> */}
-    <Footer/>
+    {/* <Footer/> */}
     </div>
   )
 }

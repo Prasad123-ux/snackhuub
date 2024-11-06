@@ -2,7 +2,8 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import Footer from "../Option/Footer"
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom" 
+import "../../Styles/signIn.css"
 
 
 export default function Sign() {
@@ -12,7 +13,7 @@ const [credentials, setCredentials]= useState({name:"", lastName:"", email:"",pa
 
 const handleFormSubmit=async (e)=>{
     e.preventDefault()
-    await fetch('https://foodie-backend-4.onrender.com/api/createUser', {
+    await fetch(' http://localhost:5000/api/createUser', {
     method:'POST',
     headers:{
       'Content-type':"application/json"
@@ -57,7 +58,7 @@ const handleFormSubmit=async (e)=>{
   }
   return (
     <>
-    <div className=" mx-auto text-center ">
+    <div className=" mx-auto text-center signIn-section ">
       
       <h2 className="mt-2 mb-5">Registration Form</h2>
       { detail===true ?

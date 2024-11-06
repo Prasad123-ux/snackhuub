@@ -3,24 +3,29 @@ import { useEffect, useState } from "react"
 import Carousel from "./Option/Carousel"
 import GetOrder from "./Option/GetOrder"
 import { useNavigate } from "react-router-dom"
-import Footer from "./Option/Footer"  
+import Footer from "./Option/Footer"   
+import "../Styles/order.css" 
+import Recommended from './Option/Recommended'
 
 
 export default function Cart() {
    const [cartItem, setCartItems]= useState([])
    
-   const navigate= useNavigate()
+   const navigate= useNavigate() 
+   const token= localStorage.getItem("token") 
+  //  console.log(new Date(item.createdAt))
   
-   
+   useEffect(()=>{
+window.scrollTo(0,0)
+   },[])
 
 
-console.log("what happened")
 
-  const getCart=()=>{
+
+  const getCart=async ()=>{
                                                //calling a function for get userCart detail from database
-  const token= localStorage.getItem('token')
 
-fetch('https://foodie-backend-4.onrender.com/api/getCart', {                       //api call
+ await fetch(' http://localhost:5000/api/getCart', {                       //api call
     method:"POST",
     headers:{
       "Content-Type":"application/json"
@@ -35,7 +40,8 @@ fetch('https://foodie-backend-4.onrender.com/api/getCart', {                    
   }
 
 })
-.then((data)=>{
+.then((data)=>{ 
+  console.log(data.data)
 setCartItems(data.data)
 // console.log(cartItem)
 
@@ -48,9 +54,8 @@ setCartItems(data.data)
 
 
 const deleteCart=(id)=>{                                  //calling a function for deleting cart
-  const token=localStorage.getItem('token')
   
-  fetch('https://foodie-backend-4.onrender.com/api/deleteCart', {          //api call
+  fetch(' http://localhost:5000/api/deleteCart', {          //api call
     method:"POST",
     headers:{
       "Content-Type":"application/json"
@@ -76,8 +81,7 @@ const deleteCart=(id)=>{                                  //calling a function f
 
 
  const getUserDetail=()=>{                            //calling a function for getting user Detail form database
-const token= localStorage.getItem('token')
-  fetch('https://foodie-backend-4.onrender.com/api/getUserDetail', {      //api call
+  fetch(' http://localhost:5000/api/getUserDetail', {      //api call
     method:"POST",
     headers:{
       "Content-Type":"application/json"
@@ -113,41 +117,7 @@ useEffect(()=>{
 
 
                                                            
-//   const onChange=(e)=>{                                          
-//  setUserDetail({...userDetail, [e.target.name]:e.target.value}) 
-// //  console.log(userDetail)
-//  }
 
-
-//  const handleFormSubmit=(e)=>{    
-//    e.preventDefault()
-//    console.log(userDetail)
-   
-  
-//     }
-//   const conformOrder=(id)=>{
-//     const token=localStorage.getItem('token')
-//     fetch('https://foodie-backend-4.onrender.com/api/setOrders', {
-//       method:"POST",
-//       headers:{
-//         "Content-Type":"application/json"
-//       },
-//       body:JSON.stringify({token:token, id:id})
-//     }).then((response)=>{
-//       if(response.ok){
-//         return response.json()
-//       }
-
-//     }).then((data)=>{
-//        console.log(data)
-
-//     }).catch((err)=>{  
-//     console.error(err)
-
-//     })
-//   }
-    // console.log(userDetail)
-    
     const getProductDetail=(id)=>{
       // navigate(`/productDetail/${id}`);
       navigate(`/productDetail/${id}`);
@@ -162,10 +132,10 @@ useEffect(()=>{
   return (
     <>
     {/* <Navbar cartLength={cartLength}/> */}
-    <Carousel/>
+    {/* <Carousel/> */}
     
     { cartItem && cartItem.length>0 ?
-    <div className=" container row justify-content-md-between mt-5 ">
+    <div className="  row justify-content-md-between cart-section ">
       {cartItem.map((item)=>{
       return  ( <div key={item._id} className="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xxl-3  mb-5 border p-5 pt-2">
   {/* <img src={item.img} className="card-img-top rounded" alt="Nothing is here" style={{height:'200px' ,width:"200px"}}/> */}
@@ -178,10 +148,10 @@ useEffect(()=>{
 
   </div>
   <ul className="list-group list-group-flush">
-    <li className="list-group-item"> Quantity: {item.qty} pic</li>
-    <li className="list-group-item">Delivery Time: {item.deliveryTime}min</li>
-    <li className="list-group-item"> FinalPrice: ₹{item.price*item.qty}</li>
-    <li className="list-group-item"> Added At: { (item.createdAt) ? item.createdAt:" N/A" } </li>
+    <li className="list-group-item"> Quantity: {item.qty ? item.qty :1 } </li>
+    <li className="list-group-item">Delivery Time: {item.deliveryTime} min</li>
+    <li className="list-group-item"> FinalPrice: ₹ { item.qty ?  item.price*item.qty:item.price}</li>
+    <li className="list-group-item"> Added At: { (item.createdAt) ?new Date(item.createdAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }):" N/A" } </li>
   </ul>
   
   <div className="card-body d-flex justify-content-between p-0 mt-3">
@@ -207,9 +177,11 @@ useEffect(()=>{
       
     
 }
-    </div>:<div className="text-center">
-      <img src="https://b.zmtcdn.com/webFrontend/96a9a259cfa3dd8e260d65d1f135ab941581004545.png" alt='' className="w-25 d-block mb-3  mx-auto mt-5"/>
-      <span className="fs-5 text-secondary fw-bold mt-5">Your Cart is empty</span><br></br>
+    </div> 
+    :<div className="text-center myOrder-option">
+      <img src="https://b.zmtcdn.com/webFrontend/96a9a259cfa3dd8e260d65d1f135ab941581004545.png" className=" d-block mx-auto  myOrder-option-img"    alt="" />
+
+      <span className="fs-5 text-secondary fw-bold ">Your Cart is empty</span><br></br>
       <span>You can go to home page to view more restaurants</span>
       
     </div>
@@ -217,9 +189,10 @@ useEffect(()=>{
 }
 
 {/* <Modals userDetail={userDetail}/> */}
-<h3 className="mt-5">Recommended</h3>
-<GetOrder/>
-<Footer/>
+<span className="mt-5 fs-5 fw-medium">You May Like This </span> 
+
+<GetOrder category={ cartItem && cartItem.length>=1 ? cartItem[0].CategoryName:"Maharashtrian"}/>  
+{/* <Footer/> */}
   
     </>
   )

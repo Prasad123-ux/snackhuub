@@ -3,11 +3,32 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { ChakraProvider } from '@chakra-ui/react';
+import { Provider } from 'react-redux';
+// import store from './Components/Redux/store'; 
+import store from "./Components/Redux/store" 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
+root.render(  
+
+
+  <React.StrictMode> 
+  <ChakraProvider>  
+
+    {/* <ColorModeSwitcher> */}
+<Provider store={store} >
+
+
+  <App />  
+  </Provider>
+  {/* </ColorModeSwitcher> */}
+
+
+  </ChakraProvider>
+    
+   
+    
+  
   </React.StrictMode>
 );
 

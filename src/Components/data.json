@@ -1,0 +1,78 @@
+   { 
+    
+   "category":[
+    {
+        "_id": "65f023fe856c997f8e6436f6",
+        "CategoryName": "North Indian"
+    },
+    {
+        "_id": "65f023fe856c997f8e6436f7",
+        "CategoryName": "South Indian"
+    },
+    {
+        "_id": "65f023fe856c997f8e6436f8",
+        "CategoryName": "Punjabi"
+    },
+    {
+        "_id": "660e26dd8c71d0d2fe4c978a",
+        "CategoryName": "Gujarati"
+    },
+    {
+        "_id": "660e26dd8c71d0d2fe4c978b",
+        "CategoryName": "Maharashtrian"
+    },
+    {
+        "_id": "660e26dd8c71d0d2fe4c978c",
+        "CategoryName": "Bengali"
+    },
+    {
+        "_id": "660e27098c71d0d2fe4c978d",
+        "CategoryName": "Rajasthani"
+    },
+    {
+        "_id": "660e27098c71d0d2fe4c978e",
+        "CategoryName": "Hyderabadi"
+    },
+    {
+        "_id": "660e27098c71d0d2fe4c978f",
+        "CategoryName": "Kerala"
+    },
+    {
+        "_id": "660e28108c71d0d2fe4c9791",
+        "CategoryName": "Tandoori"
+    },
+    {
+        "_id": "660e28108c71d0d2fe4c9792",
+        "CategoryName": "Street Food"
+    },
+    {
+        "_id": "660e28108c71d0d2fe4c9793",
+        "CategoryName": "Vegetarian"
+    },
+    {
+        "_id": "660e28638c71d0d2fe4c9795",
+        "CategoryName": "Sweet/Dessert"
+    },
+    {
+        "_id": "660e28638c71d0d2fe4c9796",
+        "CategoryName": "Snacks"
+    },
+    {
+        "_id": "660e28638c71d0d2fe4c9797",
+        "CategoryName": "Breads"
+    },
+    {
+        "_id": "660e28f58c71d0d2fe4c9798",
+        "CategoryName": "Biryani/Rice"
+    },
+    {
+        "_id": "660e28f58c71d0d2fe4c9799",
+        "CategoryName": "Starter"
+    },
+    {
+        "_id": "660e28f58c71d0d2fe4c979a",
+        "CategoryName": "Pizza"
+    }
+]
+  
+   }

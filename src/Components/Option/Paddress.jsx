@@ -31,7 +31,7 @@ export default function Paddress({location}) {
               return <div key={index} className='col-12 row mt-5'>
                 {
 
-index===0 ? <span className='col-1'><MdVerified /></span>:" "
+index===0 ? <span className='col-1 icon'><MdVerified /></span>:" "
                 }
                 
               

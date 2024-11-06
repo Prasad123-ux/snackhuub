@@ -3,17 +3,17 @@ import '../Styles/owner.css'
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Footer from './Option/Footer';
+import { useSelector } from 'react-redux';
 
 
 
 export default function Owner() {
-
+  // const token= useSelector((state)=>state.foods.token)
   const [activeIndex, setActiveIndex] = useState(0);
-  const [item, setItem]= useState()  
+  const token=useSelector((state)=>state.foods.token)
 
   useEffect(()=>{
-    const token = localStorage.getItem('token')
-    setItem(token)
+    window.scrollTo(0,0)
   },[])
 
   // Array of carousel items
@@ -63,7 +63,7 @@ export default function Owner() {
     <div className="  w-100 pb-5" style={{backgroundColor:"#f4f4f4"}}>
     <div className="bg-secondary  position-relative"  style={{height:"480px"}}>
       
-            <img src="https://b.zmtcdn.com/mx-onboarding-hero87f77501659a5656cad54d98e72bf0d81627911821.webp" className=" w-100 d-block  " style={{ height:"480px", width:"100%", opacity:"0.8" }} alt="image"/>
+            <img src="https://b.zmtcdn.com/mx-onboarding-hero87f77501659a5656cad54d98e72bf0d81627911821.webp" className=" w-100 d-block  " style={{ height:"480px", width:"100%", opacity:"0.8" }} alt=""/>
 
       
         <div className=" position-absolute top-50 start-50 translate-middle w-100 row">
@@ -84,11 +84,11 @@ export default function Owner() {
             <h5 className="text-white    mt-4 mt-md-0 and ">And get ads worth INR 1500. Valid for new restaurant partners in select cities.</h5>
             {
 
-              item && item !=="undefined" ?
+              token && token !=="undefined" ?
             <Link className="btn btn-primary mt-3" to="/ShopRegister" > Register Your restaurant </Link> :<button className=" btn btn-primary mt-3" data-bs-toggle="modal" data-dismiss="modal" data-bs-target="#exampleModal1"  >Register Your Restaurant</button> 
 
 }
-            {  item && item!=='undefined' ?
+            {  token && token!=='undefined' ?
             <Link className="btn btn-light view-btn mt-3 ms-2"   to="/RegisterProduct" >Add Your Product</Link>:  <button className=" btn btn-light view-btn mt-3 ms-2 " data-bs-toggle="modal" data-dismiss="modal" data-bs-target="#exampleModal1"  >Add your Product</button> 
 
 }
@@ -262,7 +262,7 @@ export default function Owner() {
               <div className="card-body">
                 <h5 className="card-title fw-bold">{item.title}</h5>
                 <p className="card-text fw-medium">{item.text}</p>
-                <a href="#" className="btn btn-primary">Lear More...</a>
+                <a href="/" className="btn btn-primary">Lear More...</a>
               </div>
             </div>
           </div>
@@ -271,7 +271,7 @@ export default function Owner() {
     </div>
        </div>
       <div className=' position-relative mt-5 '>
-        <img src="https://www.zomato.com/partner-with-us/static/media/startYourJourneyMobile.3b8268b0.png "  alt="this is image" className='d-block mx-auto rounded-2 side-img ' style={{height:"250px"}}/>
+        <img src="https://www.zomato.com/partner-with-us/static/media/startYourJourneyMobile.3b8268b0.png "  alt="this is" className='d-block mx-auto rounded-2 w-50 ' style={{height:"250px"}}/>
         <div className='position-absolute top-50 start-50 translate-middle design  '>
           <div className='start'>Start your journey with Foodie</div>
           <div className='create'>Create your restaurant page and register for online ordering</div>
@@ -338,7 +338,7 @@ c: GST certificate (if applicable)
 </div>
 
       </div>
-      <Footer/>
+      {/* <Footer/> */}
     </>
   )
 

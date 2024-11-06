@@ -1,229 +1,241 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Card from "../Card";
-import Footer from "../Option/Footer";
-import "../../Styles/home.css"
-import Loader from "../Option/Loader";
-import spinner from  "../../Assets/spinner.gif"
+import "../../Styles/home.css";
+import spinner from "../../Assets/spinner.gif";
+import { useDispatch, useSelector } from "react-redux";
+import { setAllFoods, setFoodCategory, setToken } from "../Redux/foodSlice";
+import { useToast } from "@chakra-ui/react";
+import Carousel from "../Option/Carousel";
 
 export default function Home() {
-  const [foodCat, setFoodCat] = useState([]);
   const [foodItems, setFoodItems] = useState([]);
-  const [search, setSearch] = useState('');
-  const [valueLength, setValueLength] = useState(0);
-  const [category, setCategory] = useState([]);
-  const [price, setPrice] = useState([]);
-  const [type, setType] = useState([]);
-  const [deliveryTime, setDeliveryTime] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const foodData = useSelector((state) => state.foods.allFoods);
+  const foodCat = useSelector((state) => state.foods.foodCategory); 
+  const filterFoods= useSelector((state)=>state.foods.filteredFoods)  
+  const userToken= useSelector((state)=>state.foods.token)
+  const toast = useToast();
+  const [allFoodCategory,setAllFoodCategory]= useState([null]) 
 
-  const filteredData = [
-    { heading: "Category", content: ['North Indian', 'South Indian', 'Punjabi', 'Gujarati', 'Marathi', 'Bengali', 'Rajasthani', 'Hyderabadi', 'Kerala', 'Tandoori', 'Street Food', 'Vegetarian', 'Sweet/Dessert', 'Snacks', 'Breads', 'Biryani', 'Starter', 'Pizza'] },
-    { heading: "Price", content: [50, 100, 200, 300, 400, 500] },
-    { heading: "Veg/NonVeg", content: ['Vegetarian', 'Non Vegetarian'] },
-    { heading: "Delivery Time (in minutes)", content: [10, 20, 30, 40, 50] }
-  ];
+  
 
-  const [loading, setLoding]= useState(false)
+  const addToast = (title, status) => {
+    toast({
+      title: title,
+      status: status,
+      duration: 5000,
+      isClosable: true,
+    });
+  };  
 
-  const loadData = async () => {
-    setLoding(true)
+
+
+  useEffect(()=>{       
+    const token = localStorage.getItem('token') 
+    dispatch(setToken(token)) 
+    console.log(userToken)
+
+    
+ 
+    if ( filterFoods && filterFoods.length>=1){   
+
+       const filterCategory=[...new Set(filterFoods.map((item)=>item.product_category))];   
+
+
+    
+    // setFoodCategory(filterCategory) 
+
+
+     setAllFoodCategory(filterCategory) 
+     
+    // setAllFoodCategory((prevCategory)=>{
+    //      return [...new Set([...prevCategory, ...filterCategory])]
+    //  }) 
+
+       console.log(setAllFoodCategory) 
+
+      
+
+    } else{
+
+    
+    const filterCategory = [...new Set(foodData.map((item) => item.product_category))];   
+    console.log(filterCategory) 
+
+    setAllFoodCategory(filterCategory) 
+
+
+
+    //  setFoodCategory(filterCategory)
+
+  //  Update `allFoodCategory` state with unique categories
+    //  setAllFoodCategory((prevCategory) => {
+      //  Add only new unique categories to prevent duplicates
+      // return [...new Set([...prevCategory, ...filterCategory])]; 
+      
+    //  }); 
+
+
+
+  }
+   
+  },[foodData,filterFoods])
+
+
+
+
+ 
+  const loadData = useCallback(async () => {
+    setLoading(true);
     try {
-      const response = await fetch('https://foodie-backend-4.onrender.com/api/displayData', {
-        method: 'get',
-        headers: {
-          'Content-Type': 'application/json'
-        }
+      const response = await fetch("http://localhost:5000/api/displayData", {
+        method: "get",
+        headers: { "Content-Type": "application/json" },
       });
       if (response.ok) {
-      
         const data = await response.json();
         setFoodItems(data.data);
-        setLoding(false)
-        // console.log(foodItems[0])
+        dispatch(setAllFoods(data.data));
+        setLoading(false);
       } else {
         throw new Error(response.statusText);
       }
     } catch (err) {
       console.log(err);
+      addToast("Failed to fetch data. Please try again later.", "error");
+      setLoading(false);
     }
-  };
+  }, [dispatch]); 
 
-  const getCatData = async () => {
+
+
+
+  const getCatData = useCallback(async () => {
+    if (!navigator.onLine) {
+      addToast("Please check your internet connection", "warning");
+      return;
+    }
     try {
-      const response = await fetch('https://foodie-backend-4.onrender.com/api/getCatData', {
+      const response = await fetch("http://localhost:5000/api/getCatData", {
         method: "GET",
-        headers: {
-          "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
       });
       if (response.ok) {
         const data = await response.json();
-        setFoodCat(data.catData);
+        dispatch(setFoodCategory(data.catData));
       } else {
         throw new Error(response.statusText);
       }
     } catch (err) {
       console.log(err);
+      addToast("Failed to fetch category data. Please try again later.", "error");
     }
-  };
+  }, [dispatch]);
 
   useEffect(() => {
     loadData();
     getCatData();
-    if (checkTokenExpires()) {
-      removeToken();
-    }
-  }, []);
-
-  const clear = () => {
-    setCategory([]);
-    setPrice([]);
-    setType([]);
-    setDeliveryTime([]);
-    setValueLength(0);
-  };
-
-  const onchange = (e) => {
-    const { name, value } = e.target;
-    if (name === 'Category') {
-      if (category.includes(value)) {
-        setCategory(category.filter(preValue => preValue !== value));
-      } else {
-        setCategory([...category, value]);
-      }
-    } else if (name === 'Price') {
-      const priceValue = parseInt(value);
-      if (price.includes(priceValue)) {
-        setPrice(price.filter(preValue => preValue !== priceValue));
-      } else {
-        setPrice([...price, priceValue]);
-      }
-    } else if (name === "Veg/NonVeg") {
-      if (type.includes(value)) {
-        setType(type.filter(preValue => preValue !== value));
-      } else {
-        setType([...type, value]);
-      }
-    } else {
-      const minutes = parseInt(value);
-      if (deliveryTime.includes(minutes)) {
-        setDeliveryTime(deliveryTime.filter(preValue => preValue !== minutes));
-      } else {
-        setDeliveryTime([...deliveryTime, minutes]);
-      }
-    }
-  };
-
-  useEffect(() => {
-    const lengthNumber = category.length + type.length + deliveryTime.length + price.length;
-    setValueLength(lengthNumber);
-  }, [category, price, type, deliveryTime]);
-
-  const checkTokenExpires = () => {
-    const expiresIn = localStorage.getItem('expiresIn');
-    if (expiresIn) {
-      return Date.now() > parseInt(expiresIn);
-    }
-  };
-
-  const removeToken = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('expiresIn');
-  };
+  }, [loadData, getCatData]); 
 
 
 
-  (foodItems.map((item)=>{
-    return console.log(item) 
-  }))
+ 
+  return (  
 
-  console.log(foodItems.length)
-  return (
-    <div className="home"> { loading  ?
-  <img src={spinner} className="loader" alt="loading"/> :""
-  }
-      
-      <div >
+
+    <div className="home">
+      {loading && <img src={spinner} className="loader" alt="loading" />}
+
+      <div className="mt-0">
         {/* Your carousel component */}
+        <Carousel />
       </div>
-  
+     {filterFoods && filterFoods.length>=1  ?
+      
+      <div className="container-fluid">
+      {allFoodCategory?.length > 0 &&
+        allFoodCategory.map((cat,index) => (
+          <div key={index} className="row">
+            <div className="fs-4 fw-medium text-secondary text-decoration-underline mt-3 shadow">
+              {cat}
+            </div>
+            {filterFoods
+              ?.filter((foodItem) => foodItem.product_category === cat)
+              .map((item) => (
+                <div
+                  key={item._id}
+                  className="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xxl-3 mt-5 mb-5"
+                >
+                  <Card
+                    name={item.product_name}
+                    description={item.product_description}
+                    price={item.product_price}
+                    address={item.shop_address}
+                    rating={item.product_rating}
+                    deliveryTime={item.product_deliveryTime}
+                    discount={item.product_discount}
+                    type={item.product_type}
+                    id={item._id}
+                    img={item.product_images.image4}
+                  />
+                </div>
+              ))}
+          </div>
+        ))}
+    </div> 
+
+
+
+
+
+
+:
+
+
+
+
+
+
+
+
 
       <div className="container-fluid">
-        {foodCat && foodCat.length > 0 ? (
-          foodCat.map((item) => {
-            return (
-              <div key={item._id} className="row">
-                <div className="fs-3 mt-3">{item.CategoryName}</div>
-                <hr />
-                {valueLength > 0 ? (
-                  foodItems.filter(data => 
-                    category.includes(data.product_category) ||
-                    price.includes(data.product_price) ||
-                    type.includes(data.product_type) ||
-                    deliveryTime.includes(data.product_deliveryTime)
-                  ).map(filteredElement => (
-                    <div key={filteredElement._id} className="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xxl-3 mt-5 mb-5">
-                      <Card 
-                        name={filteredElement.product_name}
-                        description={filteredElement.product_description}
-                        price={filteredElement.product_price}
-                        address={filteredElement.shop_address}
-                        rating={filteredElement.product_rating}
-                        deliveryTime={filteredElement.product_deliveryTime}
-                        discount={filteredElement.product_discount}
-                        type={filteredElement.product_type}
-                        id={filteredElement._id}
-                        img={filteredElement.product_images.image4}
-                      />
-                    </div>
-                  ))
-                ) : (
-                  foodItems && foodItems.length > 0 ? (
-                    search && search.length > 0 ? (
-                      foodItems
-                        .filter(data => data.product_name.toLowerCase().includes(search.toLowerCase()))
-                        .map(filteredElement => (
-                          <div key={filteredElement._id} className="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xxl-3 mt-5 mb-5">
-                            <Card 
-                              name={filteredElement.product_name}
-                              description={filteredElement.product_description}
-                              price={filteredElement.product_price}
-                              address={filteredElement.shop_address}
-                              rating={filteredElement.product_rating}
-                              deliveryTime={filteredElement.product_deliveryTime}
-                              discount={filteredElement.product_discount}
-                              type={filteredElement.product_type}
-                              id={filteredElement._id}
-                              img={filteredElement.product_images.image4}
-                            />
-                          </div>
-                        ))
-                    ) : (
-                      foodItems
-                        .filter(data => data.product_category === item.CategoryName)
-                        .map(filteredElement => (
-                          <div key={filteredElement._id} className="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xxl-3 mt-5 mb-5">
-                            <Card 
-                              name={filteredElement.product_name}
-                              description={filteredElement.product_description}
-                              price={filteredElement.product_price}
-                              address={filteredElement.shop_address}
-                              rating={filteredElement.product_rating}
-                              deliveryTime={filteredElement.product_deliveryTime}
-                              discount={filteredElement.product_discount}
-                              type={filteredElement.product_type}
-                              id={filteredElement._id}
-                              img={filteredElement.product_images.image4}
-                            />
-                          </div>
-                        ))
-                    )
-                  ) : null
-                )}
+        {allFoodCategory?.length > 0 &&
+          allFoodCategory.map((cat,index) => (
+            <div key={index} className="row">
+              <div className="fs-4 fw-medium text-secondary text-decoration-underline mt-3">
+                {cat}
               </div>
-            );
-          })
-        ) : "No data"}
-      </div>
+              {foodData
+                ?.filter((foodItem) => foodItem.product_category === cat)
+                .map((item) => (
+                  <div
+                    key={item._id}
+                    className="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3 col-xxl-3 mt-5 mb-5"
+                  >
+                    <Card
+                      name={item.product_name}
+                      description={item.product_description}
+                      price={item.product_price}
+                      address={item.shop_address}
+                      rating={item.product_rating}
+                      deliveryTime={item.product_deliveryTime}
+                      discount={item.product_discount}
+                      type={item.product_type}
+                      id={item._id}
+                      img={item.product_images.image4}
+                    />
+                  </div>
+                ))}
+            </div>
+          ))}
+      </div> 
+
+
+        }
+
+
     </div>
   );
 }

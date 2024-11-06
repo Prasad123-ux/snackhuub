@@ -12,12 +12,14 @@ import Paddress from './Paddress';
 import Psettings from './Psettings';
 import Footer from './Footer';
 import Ppayment from './Ppayment';
+import { useSelector } from 'react-redux';
 export default function Profile() {
 
   
   const [activeComponents, setActiveComponents]= useState('orders')
   const [userDetails, setUserDetail]= useState({name:"",lastName:"",mobile_no:"",email:"",location:""})
-  const [changeDetail, setChangeDetail]= useState({first_name:"", last_name:"", mobile_number:"", location:""})
+  const [changeDetail, setChangeDetail]= useState({first_name:"", last_name:"", mobile_number:"", location:""}) 
+  const token= useSelector((state)=>state.foods.token)
 
 
   const renderComponent=(componentName)=>{
@@ -25,10 +27,10 @@ export default function Profile() {
     
   }
 
-  const token= localStorage.getItem('token')
+  // const token= localStorage.getItem('token')
   const fetchProfileDetail=()=>{
 
-    fetch('https://foodie-backend-4.onrender.com/api/getUserDetail',{
+    fetch(' http://localhost:5000/api/getUserDetail',{
       method:"POST",
       body:JSON.stringify({token:token}),
       headers:{
@@ -55,7 +57,7 @@ export default function Profile() {
   const handleUpdatedData=(e)=>{
     e.preventDefault()
 
-    fetch('https://foodie-backend-4.onrender.com/api/updateUserDetail', {
+    fetch(' http://localhost:5000/api/updateUserDetail', {
       method:"POST",
       body:JSON.stringify({token:token, userDetail:changeDetail}),
       headers:{
@@ -87,6 +89,8 @@ export default function Profile() {
 fetchProfileDetail()
  },[])
  console.log(userDetails)
+
+
   return (
 
 
@@ -115,7 +119,7 @@ fetchProfileDetail()
   EDIT
 </button>
           
-<button type="button" className="btn text-white d-none d-sm-block edit   " data-toggle="modal" data-target="#exampleModalCenter">
+<button type="button" className="btn text-white d-none d-sm-block edit " data-toggle="modal" data-target="#exampleModalCenter">
   EDIT PROFILE
 </button>
 </div>
@@ -227,7 +231,7 @@ fetchProfileDetail()
       
 
 
-       <Footer/>
+       {/* <Footer/> */}
     
     </div>
   )

@@ -8,7 +8,10 @@ import { FaRupeeSign } from "react-icons/fa";
 import { useParams} from "react-router-dom";
 import { useEffect} from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";  
+import "../../Styles/summary.css" 
+import { useSelector } from "react-redux"; 
+import { useToast } from "@chakra-ui/react";
 
 
 
@@ -19,13 +22,27 @@ export default function Summary() {
    const [disabledValue, setDisabledValue]= useState(false)
    const [userDetail, setUserDetail]= useState([])
    const [item, setItem]= useState()
-  //  const navigate= useNavigate()
+   const foodData= useSelector((state)=>state.foods.allFoods)
 
    const [userData, setUserData]= useState({firstName:"", lastName:"", pinCode:"", location:"", city:"", state:"", mobile_no:"", address:""})   
    const [orderPlaced, setOrderPlaced]= useState(false)           
    const { id }= useParams();  
+   const token= useSelector((state)=>state.foods.token) 
+   const toast= useToast()
+ 
 
-  useEffect(()=>{
+
+   const addToast = (title, status) => {
+    toast({
+      title: title,
+      status: status,
+      duration: 2000,
+      isClosable: true
+    });
+  };
+   
+  useEffect(()=>{ 
+    window.scrollTo(0,0)
     const token= localStorage.getItem('token')
     setItem(token)
   }, [])
@@ -36,11 +53,11 @@ export default function Summary() {
        setUserData({...userData, [e.target.name]:e.target.value}) 
   
       }
-      const token=localStorage.getItem('token')
+      
     
       const handleFormSubmit=async (e)=>{
         e.preventDefault()  
-         await fetch('https://foodie-backend-4.onrender.com/api/updateUserLocation', {
+         await fetch(' http://localhost:5000/api/updateUserLocation', {
           method:"POST",
           body:JSON.stringify({data:userData, token:token}),
           headers:{
@@ -59,7 +76,8 @@ export default function Summary() {
 
         })
         
-      }
+      }  
+
 
 
 
@@ -67,7 +85,7 @@ export default function Summary() {
       useEffect(()=>{
         const fetchProfileDetail= async () =>{
           try{
-          const  response= await fetch('https://foodie-backend-4.onrender.com/api/getUserDetail', {
+          const  response= await fetch(' http://localhost:5000/api/getUserDetail', {
             method:"POST",
             body:JSON.stringify({token:token}),
             headers:{
@@ -97,34 +115,7 @@ export default function Summary() {
 
       }, [])
 
-      // const token= localStorage.getItem('token')
-  // const fetchProfileDetail=()=>{
-
-  //   fetch('https://foodie-backend-4.onrender.com/api/getUserDetail',{
-  //     method:"POST",
-  //     body:JSON.stringify({token:token}),
-  //     headers:{
-  //       "Content-type":"application/json"
-
-
-  //     }
-
-  //   }).then((response)=>{
-
-  //  if(response.ok){
-  //   return response.json()
-  //  }else{
-  //   throw new Error(response.statusText)
-  //  }
-
-  //   }).then((data)=>{
-  //  console.log(data)
-  //   setUserDetail(data)
-  //   // console.log(userDetail)
-
-  //   })
-  // }
-
+      
 
 
 
@@ -144,7 +135,7 @@ export default function Summary() {
     
     const fetchData = async () => {
         try {
-            const response = await fetch('https://foodie-backend-4.onrender.com/api/getOrderOnID', {
+            const response = await fetch(' http://localhost:5000/api/getOrderOnID', {
                 method: 'POST',
                 body: JSON.stringify({ id }),
                 headers: {
@@ -176,9 +167,9 @@ export default function Summary() {
   }
   
 
-  const conformOrder=(id)=>{
-    const token=localStorage.getItem('token')
-    fetch('https://foodie-backend-4.onrender.com/api/setOrders', {
+  const conformOrder=(id)=>{ 
+    
+    fetch(' http://localhost:5000/api/setOrders', {
       method:"POST",
       headers:{
         "Content-Type":"application/json"
@@ -186,7 +177,9 @@ export default function Summary() {
       body:JSON.stringify({token:token, id:id, quantity:quantity})
     }).then((response)=>{
       if(response.ok){
-        setOrderPlaced(true)
+        setOrderPlaced(true)  
+        addToast("Order Placed Successfully", "success")
+        
         return response.json()
       }
 
@@ -198,8 +191,7 @@ export default function Summary() {
 
     })
   }
-  console.log(summaryProduct)
-   console.log(userDetail)
+  console.log(foodData)
 
   
   return (
@@ -212,7 +204,7 @@ export default function Summary() {
       {/* <div className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"> */}
         {item && item !== 'undefined' ?
           <div >
-        <div className="fw-bold fs-5 ms-5 text-center d-inline text-primary "> Login <span className="text-info"> <FaCheck /></span></div>
+        <div className="fw-bold fs-5 ms-5 text-center d-inline text-primary "> Logged-in<span className="text-info"> <FaCheck  className="d-inline"/></span></div>
         {/* <div className=" fs-5">{userDetail.name ? userDetail.name:""} {userDetail.sirName ? userDetail.sirName:""} </div>   */}
         </div>:<Link to="/login" className="btn fs-5 text-danger fw-bold"> Please, Log in yourself !  </Link>
 }
@@ -231,9 +223,9 @@ export default function Summary() {
 
 <div  className="col-lg-6 col-12 mt-lg-0 mt-4">
   <span className="d-block text-secondary fw-light">Advantage of our secure login</span>
-  <span className="d-block "><span className="fs-4 text-primary"><CiDeliveryTruck /></span>  easily track orders, hassle free returns</span>
-  <span className="d-block"><span className="fs-4 text-primary"><MdAddAlert /></span >  Get Relevents orders and recommendations</span>
-  <span className="d-block"><span className="fs-4 text-primary"><TbJewishStarFilled /></span >  Get Wishlist, Reviews Ratings and More</span>
+  <span className="d-block "><span className="fs-4 text-primary"><CiDeliveryTruck className="d-inline" /></span>  easily track orders, hassle free returns</span>
+  <span className="d-block"><span className="fs-4 text-primary"><MdAddAlert className="d-inline" /></span >  Get Relevents orders and recommendations</span>
+  <span className="d-block"><span className="fs-4 text-primary"><TbJewishStarFilled className="d-inline" /></span >  Get Wishlist, Reviews Ratings and More</span>
 
 </div>
 <div className="text-secondary text-center mt-2 col-lg-12 col-12 mt-lg-0 mt-4">Please note that the upon clicking on Logout you will loss your all cart Data.</div>
@@ -251,13 +243,14 @@ export default function Summary() {
     </h2>
     <div id="collapseTwo" className="accordion-collapse collapse" data-bs-parent="#accordionExample">
       <div className="accordion-body">
+        <img src={summaryProduct.data.product_images.image1  ?   summaryProduct.data.product_images.image1 :""} alt="product-image"/>
       <div><span className=" fw-bolder">{userDetail.name ? userDetail.name:""} {userDetail.sirName ? userDetail.sirName:""}</span><span className="fw-bolder">  {userDetail.mobile_no ? userDetail.mobile_no:""}</span></div>
         {/* <div className="mt-"><span className="text-secondary "> prasadmetkar333@gmail.com</span><span className="fw-bolder "></span></div> */}
         <div className="row">
         <span className="col-8"> {userDetail.location ? userDetail.location:""}</span>
-        <button className="btn text-primary fw-bolder fs-6 col-4 " data-bs-toggle="modal" data-bs-target="#info-update-modal" data-dismiss="modal" >EDIT</button> 
+        <button className="btn text-primary fw-bolder fs-6 col-4 " data-bs-toggle="modal" data-bs-target="#info-update-modal" data-dismiss="modal" >Change Address</button> 
         
-        <button  className="btn btn-primary  col-12 w-25" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree"> Proceed</button>
+        <button  className="btn btn-primary  mx-auto proceed-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree"> Proceed</button>
 
 
         <div className=" modal fade" id="info-update-modal"  aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -352,7 +345,7 @@ export default function Summary() {
           <span className=" text-secondary ">Delivered In  </span><span className="">{summaryProduct.data.product_deliveryTime?   summaryProduct.data.product_deliveryTime :""}:min</span>
           <span className="d-block"></span>
           
-          <span className="fs-5 text-primary d-block fw-bolder"> <FaRupeeSign /> {summaryProduct.data.product_price ?   summaryProduct.data.product_price*quantity :""}</span>
+          <span className="fs-5 text-primary d-block fw-bolder"> <FaRupeeSign  className="d-inline"/> {summaryProduct.data.product_price ?   summaryProduct.data.product_price*quantity :""}</span>
           <button  className="btn btn-primary  col-12 w-50 mt-5" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour"> Proceed</button>
 
         </div>
@@ -430,7 +423,11 @@ export default function Summary() {
       </div>
     </div>
   </div>
-</div>
+</div> 
+
+
+
+
 <div className="col-12 col-lg-3  mt-5 mt-lg-0">
   <div className="fs-6 text-secondary fw-bolder">PRICE DETAILS</div>
   <hr></hr>
@@ -438,12 +435,13 @@ export default function Summary() {
   <div className="d-flex justify-content-between text-secondary mt-3" > <span>Delivery Charges</span> <span>{summaryProduct.data.product_deliveryCharges ?   summaryProduct.data.product_deliveryCharges*quantity :"FREE"}</span></div>
   <div className="d-flex justify-content-between text-secondary mt-3" > <span>Packaging Charges</span> <span>{summaryProduct.data.product_packagingCharges ?   summaryProduct.data.product_packaging_charges :"0"}</span></div>
   <hr></hr>
-  <div className="d-flex justify-content-between fw-bolder fs-5" > <span>Total Payable</span> <span> {summaryProduct.data.product_price ?   summaryProduct.data.product_price*quantity:0+summaryProduct.data.product_price ?   summaryProduct.data.product_deliveryCharges :0 + summaryProduct.data.product_deliveryCharges ?   summaryProduct.data.product_packagingCharges :0 + summaryProduct.data.product_packagingCharges ?   summaryProduct.data.product_price*quantity :"0"}</span></div>
+  <div className="d-flex justify-content-between fw-bolder fs-5" > <span>Total Payable</span> <span> <FaRupeeSign  className="d-inline"/> {summaryProduct.data.product_price ?   summaryProduct.data.product_price*quantity:0+summaryProduct.data.product_price ?   summaryProduct.data.product_deliveryCharges :0 + summaryProduct.data.product_deliveryCharges ?   summaryProduct.data.product_packagingCharges :0 + summaryProduct.data.product_packagingCharges ?   summaryProduct.data.product_price*quantity :"0"}</span></div>
   <hr></hr>
-  <div className="d-flex justify-content-between fw-bolder text-primary" > Your Total Savings on this order is 45</div>
-  <div className="col-3"><img className="w-100 d-block" src="https://rukminim2.flixcart.com/lockin/100/100/images/promotion_banner_v2_inactive_2.png?q=50"  alt="this is image"/> </div>
+  <div className="d-flex justify-content-between fw-bolder text-primary" > Your Total Savings on this order is 00</div>
+  <div className="col-3"><img className="w-100 d-block" src="https://rukminim2.flixcart.com/lockin/100/100/images/promotion_banner_v2_inactive_2.png?q=50"  alt="this is" /> </div>
 
 </div>
+
 
                
 

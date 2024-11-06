@@ -16,7 +16,7 @@ const navigate= useNavigate()
     //calling a function for get userCart detail from database
 const token= localStorage.getItem('token')
 
-fetch('https://foodie-backend-4.onrender.com/api/getFavourites', {                       //api call
+fetch(' http://localhost:5000/api/getFavourites', {                       //api call
 method:"POST",
 headers:{
 "Content-Type":"application/json"
@@ -44,7 +44,7 @@ console.log(err)
 const deleteFavourites=(id)=>{                                  //calling a function for deleting cart
   const token=localStorage.getItem('token')
   
-  fetch('https://foodie-backend-4.onrender.com/api/deleteFavourite', {          //api call
+  fetch(' http://localhost:5000/api/deleteFavourite', {          //api call
     method:"POST",
     headers:{
       "Content-Type":"application/json"
