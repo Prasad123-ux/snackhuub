@@ -45,7 +45,7 @@ export default function Card({
       setLoader(true);
       const data = { id, size, qty, token };
       try {
-        const response = await axios.post("http://localhost:5000/api/addCart", { data ,token});
+        const response = await axios.post(" https://foodie-backend-9.onrender.com/api/addCart", { data ,token});
         
         if (response.status !== 200) {
           addToast(response.data.message, "error");
@@ -63,7 +63,7 @@ export default function Card({
 
   const addToFavourites = async (id) => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/addFavourites/${id}`); 
+      const response = await axios.get(` https://foodie-backend-9.onrender.com/api/addFavourites/${id}`); 
       console.log(response)
       if (response.status !== 200) {
         addToast(response.data.message, "error");

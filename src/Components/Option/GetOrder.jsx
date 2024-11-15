@@ -33,7 +33,7 @@ export default function GetOrder({category="Maharashtrian"}) {
 
   const addToCart = (id) => {
   const data = { id, qty, token };
-    fetch('http://localhost:5000/api/addCart', {
+    fetch(' https://foodie-backend-9.onrender.com/api/addCart', {
       method: "POST",
       body: JSON.stringify(data),
       headers: {

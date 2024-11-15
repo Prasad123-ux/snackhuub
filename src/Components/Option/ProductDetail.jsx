@@ -48,7 +48,7 @@ export default function ProductDetail() {
 
   const findReview= async()=>{
     try{
-      const response= await fetch(' http://localhost:5000/api/findReview',{
+      const response= await fetch('  https://foodie-backend-9.onrender.com/api/findReview',{
         method:"POST",
         body:JSON.stringify({id}),
         headers:{
@@ -84,7 +84,7 @@ console.log(data.message)
         setLoader(true);
         const data = { id, size:"full", qty, token };
         try {
-          const response = await axios.post("http://localhost:5000/api/addCart", { data ,token});
+          const response = await axios.post(" https://foodie-backend-9.onrender.com/api/addCart", { data ,token});
           
           if (response.status !== 200) {
             addToast(response.data.message, "error");

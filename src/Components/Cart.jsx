@@ -25,7 +25,7 @@ window.scrollTo(0,0)
   const getCart=async ()=>{
                                                //calling a function for get userCart detail from database
 
- await fetch(' http://localhost:5000/api/getCart', {                       //api call
+ await fetch('  https://foodie-backend-9.onrender.com/api/getCart', {                       //api call
     method:"POST",
     headers:{
       "Content-Type":"application/json"
@@ -55,7 +55,7 @@ setCartItems(data.data)
 
 const deleteCart=(id)=>{                                  //calling a function for deleting cart
   
-  fetch(' http://localhost:5000/api/deleteCart', {          //api call
+  fetch('  https://foodie-backend-9.onrender.com/api/deleteCart', {          //api call
     method:"POST",
     headers:{
       "Content-Type":"application/json"
@@ -81,7 +81,7 @@ const deleteCart=(id)=>{                                  //calling a function f
 
 
  const getUserDetail=()=>{                            //calling a function for getting user Detail form database
-  fetch(' http://localhost:5000/api/getUserDetail', {      //api call
+  fetch('  https://foodie-backend-9.onrender.com/api/getUserDetail', {      //api call
     method:"POST",
     headers:{
       "Content-Type":"application/json"

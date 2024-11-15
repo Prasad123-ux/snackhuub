@@ -89,7 +89,7 @@ export default function Home() {
   const loadData = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:5000/api/displayData", {
+      const response = await fetch(" https://foodie-backend-9.onrender.com/api/displayData", {
         method: "get",
         headers: { "Content-Type": "application/json" },
       });
@@ -117,7 +117,7 @@ export default function Home() {
       return;
     }
     try {
-      const response = await fetch("http://localhost:5000/api/getCatData", {
+      const response = await fetch(" https://foodie-backend-9.onrender.com/api/getCatData", {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       });

@@ -30,7 +30,7 @@ export default function Profile() {
   // const token= localStorage.getItem('token')
   const fetchProfileDetail=()=>{
 
-    fetch(' http://localhost:5000/api/getUserDetail',{
+    fetch('  https://foodie-backend-9.onrender.com/api/getUserDetail',{
       method:"POST",
       body:JSON.stringify({token:token}),
       headers:{
@@ -57,7 +57,7 @@ export default function Profile() {
   const handleUpdatedData=(e)=>{
     e.preventDefault()
 
-    fetch(' http://localhost:5000/api/updateUserDetail', {
+    fetch('  https://foodie-backend-9.onrender.com/api/updateUserDetail', {
       method:"POST",
       body:JSON.stringify({token:token, userDetail:changeDetail}),
       headers:{
@@ -120,7 +120,7 @@ fetchProfileDetail()
   EDIT
 </button>
           
-<button type="button" className="btn text-white d-none d-sm-block edit " data-toggle="modal" data-target="#exampleModalCenter">
+<button type="button" className="btn text-white d-none d-sm-block edit " data-toggle="modal" data-target="#exampleModalCenter">  
   EDIT PROFILE
 </button>
 </div>

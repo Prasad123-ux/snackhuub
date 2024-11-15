@@ -19,7 +19,7 @@ export default function Order() {
 
     const getOrders= async()=>{
         const token= localStorage.getItem('token')
-       await fetch(' http://localhost:5000/api/getOrders', {
+       await fetch('  https://foodie-backend-9.onrender.com/api/getOrders', {
             method:"POST",
             headers:{
                 "Content-Type":"application/json"
