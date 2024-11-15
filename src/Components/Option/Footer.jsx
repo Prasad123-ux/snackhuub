@@ -43,42 +43,60 @@ export default function Footer() {
           </div>
           <div className="row d-flex justify-content-center">
       <div className="col-12 col-sm-6 col-md-6 col-lg-4 p-5">
-        <div className="heading">ABOUT FOODIE</div>
-        <div className='content'>Who We ARE</div>
-         <div className='content'>Blog</div>
-         <div className='content'> Work With Us</div>
-         <div className='content'>Investors Relations</div>
-         <div className='content'>Report Fraud</div>
-         <div className='content'>Press Kit</div>
-         <div className='content'>Contact use</div>
+         <div className="heading">ABOUT FOODIE</div>
+       <Link to="/blank" ><div className='content'>Who We ARE</div></Link> 
+       <Link to="/blank" ><div className='content'>Blogs</div></Link>
+       <Link to="/blank" ><div className='content'>Work with us</div></Link>
+
+       <Link to="/blank" ><div className='content'>Investor relations</div></Link>
+
+       <Link to="/blank" ><div className='content'>Report fraud</div></Link>
+       <Link to="/blank" ><div className='content'>Press Kit</div></Link>
+       <Link to="/blank" ><div className='content'>Contact use</div></Link>
+
+
+
+
 
 
       </div>
       <div className="col-12 col-sm-6   col-md-6 col-lg-2 p-5 ">
-        <div className="heading">FODAVERSE FOR</div>
-        <div className="content">Foodie</div>
-         <div className="content">Blinkit</div>
-         <div className="content"> Feeding India</div>
-         <div className="content">Hyperpure</div>
-         <div className="content">Fomaland</div>
+        <div  className="heading">FODAVERSE FOR</div> 
+        <Link to="/" ><div className='content'>Foodie</div></Link>
+        <Link to="/blank" ><div className='content'>Blinkit</div></Link>
+        <Link to="/blank" ><div className='content'>Feeding India</div></Link> 
+        <Link to="/blank" ><div className='content'>Hyperpure</div></Link> 
+        <Link to="/blank" ><div className='content'>Contact use</div></Link>
+
+
+
+
+
+       
       
 
 
       </div>
-      <div className="col-12 col-sm-6   col-md-6 col-lg-2 p-5">
-        <div className="heading ">RESTAURANTS</div>
-        <div className="content">Partner with use</div>
-         <div className="content">Apps For You</div>
-         
+      <div className="col-12 col-sm-6   col-md-6 col-lg-2 p-5"> 
+      <div  className="heading">Restaurants</div> 
+        
+        <Link to="/blank"><div className='content'>Partner with us</div></Link> 
+        <Link to="/blank" ><div className='content'>Apps for you </div></Link>
+
+       
 
 
       </div>
-      <div className="col-12   col-sm-6 col-md-6  col-lg-2 p-5">
-        <div className="heading">LEARN MORE</div>
-        <div className="content">Privacy</div>
-         <div className="content">Security</div>
-         <div className="content"> Terms</div>
-         <div className="content">Sitemap</div>
+      <div className="col-12   col-sm-6 col-md-6  col-lg-2 p-5"> 
+            <div  className="heading">Learn More</div> 
+ 
+            <Link to="/blank" ><div className='content'>Privacy</div></Link> 
+        <Link to="/blank"><div className='content'>Security </div></Link>
+        <Link to="/blank"><div className='content'>Terms</div></Link> 
+        <Link to="/blank"><div className='content'>sitemap </div></Link>
+
+
+        
          
 
       </div>

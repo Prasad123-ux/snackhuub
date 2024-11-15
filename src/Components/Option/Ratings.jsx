@@ -92,7 +92,7 @@ console.log(review)
         <span className='fs-4 fw-bold '>Ratings and Reviews</span>
         <div className='d-flex justify-content-between flex-sm-column flex-row'>
           <span className='fs-lg-5 fs-6 fw-bold'>{productData.data.product_name ? productData.data.product_name:""}/ {productData.data.product_category ? productData.data.product_category:""} </span> 
-        <span className='       d-block'><span className='bg-success  rounded text-white  fw-bolder icon'> <FcRating className='d-inline'/> {productData.data.product_rating ? productData.data.product_rating:""}</span></span>
+        <span className=' d-block'><span className='text-dark shadow rounded text-white  fs-6 icon'> <FcRating className='d-inline icons '/> {productData.data.product_rating ? productData.data.product_rating:""}</span></span>
 
         </div>
       </div>

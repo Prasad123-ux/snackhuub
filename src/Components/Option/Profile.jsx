@@ -95,25 +95,26 @@ fetchProfileDetail()
 
 
     
-    <div className='mains mx-auto'>
+    <div className='mains mx-auto mt-5'>
       
 
 
-        <div className='text-white profile_section d-flex justify-content-lg-between  justify-content-around '>
-          <div className='row  profile_name'> 
+        <div className='text-white profile_section d-flex justify-content-lg-between mt-5 justify-content-around '>
+          <div className='row  profile_name mt-5'> 
           <div className=' col-lg-12 col-12 userName fw-bolder'> {userDetails.name}  {userDetails.lastName}</div>
           <div className='col-lg-3  col-12 mobile_number fw-medium'>{userDetails.mobile_no}</div> 
           <div className='col-lg-5 col-12 email fw-medium'>{userDetails.email}</div>
           
 
           </div>
-          <div className='edit-btn'>
+          <div className='edit-btn mt-5'>
             {/* <button className=' text-white btn d-none d-sm-block  edit '>EDIT PROFILE</button>  */}
             
 
 
 
-            {/* <button className=' text-white btn  d-block d-sm-none edit '>EDIT </button> */}
+            {/* <button className=' text-white btn  d-block d-sm-none edit '>EDIT </button> */} 
+
 
             <button type="button" className="   text-white btn  d-block d-sm-none edit  " data-toggle="modal" data-target="#exampleModalCenter">
   EDIT

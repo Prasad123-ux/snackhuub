@@ -16,6 +16,7 @@ import Summary from './Components/Option/Summary'
 import Payments from './Components/Option/Payments'
 import Ratings from './Components/Option/Ratings'
 import Footer from './Components/Option/Footer'
+import Blank from './Components/Screens/Blank'
 
 
 export default function App() {
@@ -43,8 +44,11 @@ export default function App() {
        <Route exact path="profile/orders" element={<Porders/>}/>
        <Route exact path="/ownerProfile" element={<OwnerProfile/>}/>
        <Route exact path="/summary/:id" element={<Summary/>}/>
-       <Route exact path="/payments" element={<Payments/>}/>
-       <Route exact path="/rateProduct/:id" element={<Ratings/>}/> 
+       <Route exact path="/payments" element={<Payments/>}/> 
+       <Route exact path="/rateProduct/:id" element={<Ratings/>}/>  
+       <Route exact path="/blank" element={<Blank/>}/>  
+
+       
        
 
        
